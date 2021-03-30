@@ -1,15 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+    <ion-toolbar class="toolbar">
+      <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2">
+      <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
+    </ion-input>
+    
+    <ion-label>TO</ion-label>
+    <div>
+  <ion-select [interfaceOptions]="customAlertOptions" interface="alert">
+    <ion-select-option value="brown">Brown</ion-select-option>
+    <ion-select-option value="blonde">Blonde</ion-select-option>
+    <ion-select-option value="black">Black</ion-select-option>
+    <ion-select-option value="red">Red</ion-select-option>
+  </ion-select>
+  </div>
     </ion-toolbar>
   </ion-header>
 

@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-
+  customAlertOptions: any = {
+    header: 'Choose Currency',
+    translucent: true
+  };
   constructor() {}
 
 }

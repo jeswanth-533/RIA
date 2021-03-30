@@ -13,7 +13,6 @@ ratesList:any;
 
   ngOnInit(){
 this.exchangeRate.getLatestrates().subscribe(list => {
-  debugger;
 this.ratesList = list;
 });
   }
