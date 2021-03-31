@@ -27,30 +27,38 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.latestRates();
-    //this.calculateRates();
   }
 
   latestRates() {
-    let data = this.currencyService.currencies();
     this.exchangeRate.getLatestrates().subscribe((list) => {
       if (list !== null) {
         this.ratesList = list;
-        for (let i = 0; i < data.length; i++) {
-          this.comparingCode = data[i].toString();
-          var rateValue = this.ratesList.rates[this.comparingCode];
-           var calculatedValues:calculatedExchangeRates = {
-            currencyCode: this.comparingCode,
-            exchangeValue: rateValue === undefined? 100:rateValue,
-            receivingAmount: 1 * rateValue,
-            reverseRate: 1 / rateValue ,
-          };
-          this.finalExchangesRates.push(calculatedValues);
-        }
+        this.calculateRates(1);
       }
     });
   }
 
-  calculateRates(amount?: number) {}
+  calculateRates(amount: number) {
+    let data = this.currencyService.currencies();
+    for (let i = 0; i < data.length; i++) {
+      this.comparingCode = data[i].toString();
+      var rateValue = this.ratesList.rates[this.comparingCode];
+       var calculatedValues:calculatedExchangeRates = {
+        currencyCode: this.comparingCode,
+        exchangeValue: rateValue,
+        receivingAmount: amount * rateValue,
+        reverseRate: 1 / rateValue ,
+      };
+      this.finalExchangesRates.push(calculatedValues);
+    }
+  }
+  calculateExchangerates(event){
+    console.log(this.enteredAmount);
+    this.finalExchangesRates = [];
+    this.calculateRates(this.enteredAmount);
+
+  }
+
 }
 
 
