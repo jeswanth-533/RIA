@@ -1,11 +1,21 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar class="toolbar">
-      <ion-input id = "Amount" type = "number" placeholder = "Enter Amount" class = "ionInput">
+      <ion-input id = "Amount" type = "number" placeholder = "Enter Amount" class = "ionInput" [(ngModel)] = "enteredAmount">
         <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
     </ion-input>
     </ion-toolbar>
   </ion-header>
-
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-card-title>Card Title</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile,
+      and climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content>
+  </ion-card>
   <app-explore-container name="Tab 1 page"></app-explore-container>
 </ion-content>

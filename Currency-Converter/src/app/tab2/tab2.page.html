@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar class="toolbar">
       <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2">
       <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
@@ -7,7 +7,7 @@
     
     <ion-label>TO</ion-label>
     <div>
-  <ion-select [interfaceOptions]="customAlertOptions" interface="alert">
+  <ion-select [interfaceOptions]="customAlertOptions" interface="alert" slot="start">
     <ion-select-option value="brown">Brown</ion-select-option>
     <ion-select-option value="blonde">Blonde</ion-select-option>
     <ion-select-option value="black">Black</ion-select-option>
