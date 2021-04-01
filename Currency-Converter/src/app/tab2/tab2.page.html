@@ -1,21 +1,40 @@
 <ion-content [fullscreen]="true">
   <ion-header>
     <ion-toolbar class="toolbar">
-      <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2">
+      <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2" >
       <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
     </ion-input>
-    
-    <ion-label>TO</ion-label>
     <div>
-  <ion-select [interfaceOptions]="customAlertOptions" interface="alert" slot="start">
-    <ion-select-option value="brown">Brown</ion-select-option>
-    <ion-select-option value="blonde">Blonde</ion-select-option>
-    <ion-select-option value="black">Black</ion-select-option>
-    <ion-select-option value="red">Red</ion-select-option>
+    <div class="labelClass">
+  <span class = "spanClass">TO</span>
+  <ion-select class = "ionSelect" [interfaceOptions]="customAlertOptions" interface="alert" slot="start"  (ionChange) = "getCurrencySymbol($event)">
+    <ion-select-option *ngFor = "let symbol of currencySymbols "value="{{symbol}}">{{symbol}}</ion-select-option>
   </ion-select>
-  </div>
+</div>
+</div>
     </ion-toolbar>
+    <ion-card color = "primary">
+      <ion-segment color = "primary" scrollable mode = "ios"  (ionChange)="segmentChanged($event)" [(ngModel)]="segment">
+        <ion-segment-button value = "1day">
+          <ion-label>1D</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value = "1month">
+          <ion-label>1M</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value = "1year">
+          <ion-label>1Y</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card>
   </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+<ion-content [fullscreen]="true">
+  <div>
+  <ion-card>
+    <ion-card-content>
+      <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
 </ion-content>
+</ion-content>
+

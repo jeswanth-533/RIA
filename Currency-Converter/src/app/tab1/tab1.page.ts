@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeRateService } from '../Service/exchange-rate.service';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import {
   ExchangeRateItem,
   calculatedExchangeRates,
@@ -19,7 +19,8 @@ export class Tab1Page implements OnInit {
   baseCurrency = 'EUR';
   finalExchangesRates: calculatedExchangeRates[] = [];
   comparingCode: string;
-
+  currentDate:string;
+  subscription: Subscription;
   constructor(
     private exchangeRate: ExchangeRateService,
     private currencyService: CurrencyServiceService
@@ -30,15 +31,19 @@ export class Tab1Page implements OnInit {
   }
 
   latestRates() {
-    this.exchangeRate.getLatestrates().subscribe((list) => {
+    var date = new Date();
+    this.subscription = this.exchangeRate.getLatestrates(date).subscribe((list) => {
       if (list !== null) {
         this.ratesList = list;
         this.calculateRates(1);
       }
     });
   }
-
+ngOnDestroy(){
+  this.subscription.unsubscribe();
+}
   calculateRates(amount: number) {
+    amount = amount | 1;
     let data = this.currencyService.currencies();
     for (let i = 0; i < data.length; i++) {
       this.comparingCode = data[i].toString();
@@ -53,10 +58,8 @@ export class Tab1Page implements OnInit {
     }
   }
   calculateExchangerates(event){
-    console.log(this.enteredAmount);
     this.finalExchangesRates = [];
     this.calculateRates(this.enteredAmount);
-
   }
 
 }
