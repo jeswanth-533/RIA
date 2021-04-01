@@ -6,7 +6,6 @@ import {
   calculatedExchangeRates,
 } from '../Model/exchnage-rate-model';
 import { CurrencyServiceService } from '../Service/currency-service.service';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-tab1',
@@ -19,7 +18,7 @@ export class Tab1Page implements OnInit {
   baseCurrency = 'EUR';
   finalExchangesRates: calculatedExchangeRates[] = [];
   comparingCode: string;
-  currentDate:string;
+  currentDate: string;
   subscription: Subscription;
   constructor(
     private exchangeRate: ExchangeRateService,
@@ -32,36 +31,39 @@ export class Tab1Page implements OnInit {
 
   latestRates() {
     var date = new Date();
-    this.subscription = this.exchangeRate.getLatestrates(date).subscribe((list) => {
-      if (list !== null) {
-        this.ratesList = list;
-        this.calculateRates(1);
-      }
-    });
+    this.subscription = this.exchangeRate
+      .getLatestrates(date)
+      .subscribe((list) => {
+        if (list !== null) {
+          this.ratesList = list;
+          this.calculateRates(1);
+        }
+      });
   }
-ngOnDestroy(){
-  this.subscription.unsubscribe();
-}
+  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  //This method will take the entered EUR amount and will calculate the rates for all currencies.
   calculateRates(amount: number) {
     amount = amount | 1;
     let data = this.currencyService.currencies();
     for (let i = 0; i < data.length; i++) {
       this.comparingCode = data[i].toString();
       var rateValue = this.ratesList.rates[this.comparingCode];
-       var calculatedValues:calculatedExchangeRates = {
+      var calculatedValues: calculatedExchangeRates = {
         currencyCode: this.comparingCode,
         exchangeValue: rateValue,
         receivingAmount: amount * rateValue,
-        reverseRate: 1 / rateValue ,
+        reverseRate: 1 / rateValue,
       };
       this.finalExchangesRates.push(calculatedValues);
     }
   }
-  calculateExchangerates(event){
+
+  calculateExchangerates(event) {
     this.finalExchangesRates = [];
     this.calculateRates(this.enteredAmount);
   }
-
 }
-
-

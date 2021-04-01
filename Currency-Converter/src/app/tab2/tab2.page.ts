@@ -5,14 +5,14 @@ import { DatePipe } from '@angular/common';
 import { Chart } from 'chart.js';
 import { Subscription } from 'rxjs';
 
-export interface chartData{
-  date:string;
-  rateInfo:rate;
+export interface chartData {
+  date: string;
+  rateInfo: rate;
 }
 
-export interface rate{
-  symbol:string,
-  rate:string
+export interface rate {
+  symbol: string;
+  rate: string;
 }
 
 @Component({
@@ -27,12 +27,12 @@ export class Tab2Page implements OnInit {
   isTimePeriodselected: boolean = false;
   baseCurrency = 'EUR';
   startDate: string;
-  dateArray:string[] =[];
-  ratesArray:number[] = [];
+  dateArray: string[] = [];
+  ratesArray: number[] = [];
   subscription: Subscription;
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
   lineChart: any;
-  segment:string;
+  segment: string;
   customAlertOptions: any = {
     header: 'Choose Currency',
     translucent: true,
@@ -47,17 +47,17 @@ export class Tab2Page implements OnInit {
     this.currencySymbols = this.currencyService.currencies();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   getCurrencySymbol(event) {
     this.selectedCurrencySymbol = event.target.value;
-    this.segment ='';
-   // this.lineChartMethod([],[],'');
+    this.segment = '';
+    // this.lineChartMethod([],[],'');
   }
 
-  segmentChanged(event?:any) {
+  segmentChanged(event?: any) {
     var initialDate, endDate, Symbol;
     Symbol = this.selectedCurrencySymbol;
     var date = new Date();
@@ -67,21 +67,18 @@ export class Tab2Page implements OnInit {
         date.setDate(date.getDate() - 30),
         'yyyy-MM-dd'
       );
-      //this.callToExchangeservice(initialDate, endDate, Symbol);
     } else if (event.target.value === '1year') {
       endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
       initialDate = this.datePipe.transform(
         date.setFullYear(date.getFullYear() - 1),
         'yyyy-MM-dd'
       );
-      //this.callToExchangeservice(initialDate, endDate, Symbol);
-    }else if(event.target.value === '1day'){
+    } else if (event.target.value === '1day') {
       endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
       initialDate = this.datePipe.transform(
         date.setDate(date.getDate() - 1),
         'yyyy-MM-dd'
       );
-      //this.callToExchangeservice(initialDate, endDate, Symbol);
     }
     this.callToExchangeservice(initialDate, endDate, Symbol);
   }
@@ -94,47 +91,48 @@ export class Tab2Page implements OnInit {
       .subscribe((response) => {
         if (response !== null) {
           this.isTimePeriodselected = true;
-           var dates = Object.keys(response.rates);
-           dates.forEach(data => this.dateArray.push(data));
-           this.dateArray.forEach(date => {
-            var x=response.rates[date];
+          var dates = Object.keys(response.rates);
+          dates.forEach((data) => this.dateArray.push(data));
+          this.dateArray.forEach((date) => {
+            var x = response.rates[date];
             this.ratesArray.push(x[symbol]);
           });
         }
-        this.lineChartMethod(this.dateArray,this.ratesArray,symbol);
+        this.lineChartMethod(this.dateArray, this.ratesArray, symbol);
       });
   }
 
 
-  lineChartMethod(xDataPoints:any,yDataPoints:any,currencySymbol:string){
-      this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-        type: 'line',
-        data: {
-          labels: xDataPoints,
-          datasets: [
-            {
-              label: 'Exchange rate of ' + currencySymbol ,
-              fill: false,
-              lineTension: 0.1,
-              backgroundColor: 'rgba(75,192,192,0.4)',
-              borderColor: 'rgba(75,192,192,1)',
-              borderDash: [],
-              borderDashOffset: 0.0,
-              pointBorderColor: 'rgba(75,192,192,1)',
-              pointBackgroundColor: '#fff',
-              pointBorderWidth: 1,
-              pointHoverRadius: 5,
-              pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-              pointHoverBorderColor: 'rgba(220,220,220,1)',
-              pointHoverBorderWidth: 2,
-              pointRadius: 1,
-              pointHitRadius: 10,
-              data: yDataPoints,
-              spanGaps: false,
-            }
-          ]
-        }
-      });
-      this.lineChart.render();
-    }
+  // This method will take the X and Y datapoints to plot in the chart of type Line.
+  lineChartMethod(xDataPoints: any, yDataPoints: any, currencySymbol: string) {
+    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+      type: 'line',
+      data: {
+        labels: xDataPoints,
+        datasets: [
+          {
+            label: 'Exchange rate of ' + currencySymbol,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: yDataPoints,
+            spanGaps: false,
+          },
+        ],
+      },
+    });
+    this.lineChart.render();
+  }
 }
