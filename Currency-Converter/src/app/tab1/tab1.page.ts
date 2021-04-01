@@ -46,7 +46,8 @@ export class Tab1Page implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  //This method will take the entered EUR amount and will calculate the rates for all currencies.
+  //This method will take the entered EUR amount and will calculate the rates for all currencies. 
+  //Added debounce time to restrict the HTTP call for each key stroke while enetering in the input.
   calculateRates(amount: number) {
     amount = amount | 1;
     this.currencyService.setInputValue(1);
