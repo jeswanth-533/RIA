@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <ion-header>
     <ion-toolbar class="toolbar">
-      <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2" >
+      <ion-input id = "page2Amount" type = "number" placeholder = "Enter Amount" class = "ionInput2" [value] = value>
       <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
     </ion-input>
     <div>
@@ -30,7 +30,7 @@
   <div>
   <ion-card>
     <ion-card-content>
-      <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+      <canvas #lineCanvas style="position: relative; height:25vh; width:40vw"></canvas>
     </ion-card-content>
   </ion-card>
 </div>

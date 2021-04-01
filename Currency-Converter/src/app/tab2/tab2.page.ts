@@ -33,6 +33,7 @@ export class Tab2Page implements OnInit {
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
   lineChart: any;
   segment: string;
+  value:number;
   customAlertOptions: any = {
     header: 'Choose Currency',
     translucent: true,
@@ -44,6 +45,7 @@ export class Tab2Page implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.value = this.currencyService.getInputValue();
     this.currencySymbols = this.currencyService.currencies();
   }
 
@@ -54,7 +56,7 @@ export class Tab2Page implements OnInit {
   getCurrencySymbol(event) {
     this.selectedCurrencySymbol = event.target.value;
     this.segment = '';
-    // this.lineChartMethod([],[],'');
+    this.lineChart.destroy();
   }
 
   segmentChanged(event?: any) {

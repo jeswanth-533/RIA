@@ -26,6 +26,7 @@ export class Tab1Page implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currencyService.setInputValue(1);
     this.latestRates();
   }
 
@@ -40,7 +41,7 @@ export class Tab1Page implements OnInit {
         }
       });
   }
-  
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -48,6 +49,7 @@ export class Tab1Page implements OnInit {
   //This method will take the entered EUR amount and will calculate the rates for all currencies.
   calculateRates(amount: number) {
     amount = amount | 1;
+    this.currencyService.setInputValue(1);
     let data = this.currencyService.currencies();
     for (let i = 0; i < data.length; i++) {
       this.comparingCode = data[i].toString();
