@@ -1,11 +1,27 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar class="toolbar">
-      <ion-input id = "Amount" type = "number" placeholder = "Enter Amount" class = "ionInput">
+      <ion-input id = "Amount" type = "number" placeholder = "Enter Amount" class = "ionInput" [(ngModel)] = "enteredAmount" debounce = 1000 (ionChange) = "calculateExchangerates($event)">
         <div class="currencyEUR" aria-label="Currency Code"> EUR </div>
     </ion-input>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div>
+  <ion-card *ngFor = "let list of finalExchangesRates">
+    <div class = "ion-card-header-class">
+    <ion-card-header>
+      <ion-card-title class = "ion-card-title-class">{{list.currencyCode}}
+      </ion-card-title>
+      
+    </ion-card-header>
+</div>
+<div class = "ion-card-content-class">
+    <ion-card-content>
+     <ion-label class="receivingAmount">{{list.receivingAmount | number}}</ion-label><br/>
+     <ion-label class = "restOfIonLabels">1 {{baseCurrency}} = {{list.exchangeValue}} {{list.currencyCode}}</ion-label><br/>
+     <ion-label class = "restOfIonLabels">1 {{list.currencyCode}} = {{list.reverseRate | number}} {{baseCurrency}} </ion-label><br/>
+    </ion-card-content>
+  </div>
+  </ion-card>
+  </div>
 </ion-content>
